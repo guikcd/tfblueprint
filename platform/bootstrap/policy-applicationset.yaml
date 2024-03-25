@@ -9,15 +9,16 @@ spec:
   generators:
   - matrix:
       generators:
-      - clusters:
-          selector:
-            matchLabels:
-              environment: control-plane            
       - git:
         repoURL: '{{metadata.annotations.platform_repo_url}}'
         revision: '{{metadata.annotations.platform_repo_revision}}'
         directories:
-          - path: '{{metadata.annotations.platform_repo_basepath}}policy/cluster/*'
+          - path: '{{metadata.annotations.platform_repo_basepath}}policy/cluster/*'      
+      - clusters:
+          selector:
+            matchLabels:
+              environment: control-plane            
+
 
   template:
     metadata:
