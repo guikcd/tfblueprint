@@ -13,7 +13,7 @@ spec:
       recurse: true
   destination:
     namespace: 'argocd'
-    name: '{{name}}'
+    name: 'hub-cluster'
   syncPolicy:
     automated:
       allowEmpty: true
