@@ -19,7 +19,7 @@ spec:
         repoURL: '{{metadata.annotations.platform_repo_url}}'
         revision: '{{metadata.annotations.platform_repo_revision}}'
         directories:
-          - path: '{{metadata.annotations.platform_repo_basepath}}cluster/*'
+          - path: '{{metadata.annotations.platform_repo_basepath}}policy/cluster/*'
 
   template:
     metadata:
@@ -31,7 +31,7 @@ spec:
       project: default
       source:
         repoURL: '{{metadata.annotations.platform_repo_url}}'
-        path: '{{metadata.annotations.platform_repo_basepath}}charts/namespace'
+        path: '{{metadata.annotations.platform_repo_basepath}}policy/charts/namespace'
         targetRevision: '{{metadata.annotations.platform_repo_revision}}'
         helm:
           releaseName: '{{path.basename}}'
