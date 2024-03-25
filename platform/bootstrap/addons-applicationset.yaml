@@ -1,19 +1,30 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
   name: cluster-addons
   namespace: argocd
 spec:
-  project: default
-  source:
-    repoURL: '{{metadata.annotations.addons_repo_url}}'
-    path: '{{metadata.annotations.addons_repo_basepath}}{{metadata.annotations.addons_repo_path}}'
-    targetRevision: '{{metadata.annotations.addons_repo_revision}}'
-    directory:
-      recurse: true
-  destination:
-    namespace: 'argocd'
-    name: 'hub-cluster'
   syncPolicy:
-    automated:
-      allowEmpty: true
+    preserveResourcesOnDeletion: true
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          environment: control-plane
+  template:
+    metadata:
+      name: 'cluster-addons'
+    spec:
+      project: default
+      source:
+        repoURL: '{{metadata.annotations.addons_repo_url}}'
+        path: '{{metadata.annotations.addons_repo_basepath}}{{metadata.annotations.addons_repo_path}}'
+        targetRevision: '{{metadata.annotations.addons_repo_revision}}'
+        directory:
+          recurse: true
+      destination:
+        namespace: 'argocd'
+        name: '{{name}}'
+      syncPolicy:
+        automated:
+          allowEmpty: true
