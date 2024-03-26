@@ -11,12 +11,12 @@ spec:
         generators:
           - clusters:
               selector:
-                matchExpressions:
-                  - key: workload_webstore
-                    operator: In
-                    values: [true]
-              # values:
-              #   team: backend
+                matchLabels:
+                  workload_webstore: true                       
+                # matchExpressions:
+                #   - key: workload_webstore
+                #     operator: In
+                #     values: [true]
           - git:
               repoURL: '{{metadata.annotations.workload_repo_url}}'
               revision: '{{metadata.annotations.workload_repo_revision}}'
