@@ -14,7 +14,7 @@ spec:
                 matchExpressions:
                   - key: workload_webstore
                     operator: Equal
-                    values: true
+                    values: "true"
               # values:
               #   team: backend
           - git:
