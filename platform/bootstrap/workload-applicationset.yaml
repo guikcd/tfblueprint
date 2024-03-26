@@ -31,7 +31,7 @@ spec:
       project: default
       source:
         repoURL: '{{metadata.annotations.platform_repo_url}}'
-        path: '{{metadata.annotations.platform_repo_basepath}}workload/tenant/{{path.basename}}/{{path.basename}}-applicationset.yaml'
+        path: '{{metadata.annotations.platform_repo_basepath}}workload/tenant/{{path.basename}}/*'
         targetRevision: '{{metadata.annotations.platform_repo_revision}}'
         # helm:
         #   releaseName: '{{path.basename}}'
