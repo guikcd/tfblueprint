@@ -31,7 +31,7 @@ spec:
       project: default
       source:
         repoURL: '{{metadata.annotations.platform_repo_url}}'
-        path: '{{path}}/*'
+        path: '{{path}}'
         targetRevision: '{{metadata.annotations.platform_repo_revision}}'
         # helm:
         #   releaseName: '{{path.basename}}'
