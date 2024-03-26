@@ -24,6 +24,7 @@ spec:
       selector:
         matchLabels:
           workload_webstore: true                       
+          
   template:
     metadata:
       name: 'web-store-{{metadata.labels.environment}}-{{path.basename}}'
