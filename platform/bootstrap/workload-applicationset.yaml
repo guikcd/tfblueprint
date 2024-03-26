@@ -26,7 +26,7 @@ spec:
       name: 'workload-{{path.basename}}'
       labels:
         environment: '{{metadata.labels.environment}}'
-        cluster: '{{path.basename}}'
+ #       cluster: '{{path.basename}}'
     spec:
       project: default
       source:
