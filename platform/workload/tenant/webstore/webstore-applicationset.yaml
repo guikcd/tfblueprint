@@ -6,23 +6,24 @@ metadata:
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
-  generators:
-    - matrix:
-        generators:
-          - clusters:
-              selector:
-                matchLabels:
-                  workload_webstore: true                       
-                # matchExpressions:
-                #   - key: workload_webstore
-                #     operator: In
-                #     values: [true]
-          - git:
-              repoURL: '{{metadata.annotations.workload_repo_url}}'
-              revision: '{{metadata.annotations.workload_repo_revision}}'
-              directories:
-                - path: '{{metadata.annotations.workload_repo_basepath}}webstore/*'
+  # generators:
+  #   - matrix:
+  #       generators:
+  #         - clusters:
+  #             selector:
+  #               matchLabels:
+  #                 workload_webstore: true                       
 
+  #         - git:
+  #             repoURL: '{{metadata.annotations.workload_repo_url}}'
+  #             revision: '{{metadata.annotations.workload_repo_revision}}'
+  #             directories:
+  #               - path: '{{metadata.annotations.workload_repo_basepath}}webstore/*'
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          workload_webstore: true                       
   template:
     metadata:
       name: 'web-store-{{metadata.labels.environment}}-{{path.basename}}'
