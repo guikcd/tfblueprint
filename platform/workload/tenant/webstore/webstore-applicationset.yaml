@@ -12,7 +12,7 @@ spec:
           - clusters:
               selector:
                 matchLabels:
-                  workload_webstore: "true"                       
+                  workload_webstore: 'true'                       
 
           - git:
               repoURL: '{{metadata.annotations.workload_repo_url}}'
