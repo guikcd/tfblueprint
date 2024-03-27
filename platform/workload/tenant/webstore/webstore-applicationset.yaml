@@ -9,11 +9,18 @@ spec:
   generators:
     - matrix:
         generators:
-          - clusters:
-              selector:
-                matchLabels:
-                  workload_webstore: 'true'                       
-
+        - list:
+            elements:
+            - cluster: engineering-dev
+              name1: spoke-staging       
+          # - clusters:
+          #     selector:
+          #       matchExpressions:
+          #         - key: workload_webstore
+          #           operator: Equal
+          #           values: true
+              # values:
+              #   team: backend
           - git:
               repoURL: '{{metadata.annotations.workload_repo_url}}'
               revision: '{{metadata.annotations.workload_repo_revision}}'
@@ -41,8 +48,8 @@ spec:
         path: '{{path}}/{{metadata.labels.environment}}'
         targetRevision: '{{metadata.annotations.workload_repo_revision}}'
       destination:
-        namespace: '{{path.basename}}'
-        name: '{{name}}'
+#        namespace: '{{path.basename}}'
+        name: '{{name1}}'
       syncPolicy:
         automated:
           allowEmpty: true
