@@ -21,7 +21,7 @@ spec:
             repoURL: '{{metadata.annotations.platform_repo_url}}'
             revision: '{{metadata.annotations.platform_repo_revision}}'
             directories:
-              - path: '{{metadata.annotations.platform_repo_basepath}}teams/*'
+              - path: '{{metadata.annotations.platform_repo_basepath}}config/tenant/*'
   template:
     metadata:
       name: 'argoprojects-{{path.basename}}'
@@ -40,7 +40,7 @@ spec:
           helm:
             releaseName: 'argoprojects-{{path.basename}}'
             valueFiles:
-            - '$values/{{metadata.annotations.platform_repo_basepath}}teams/{{path.basename}}/argoproject-values.yaml'
+            - '$values/{{metadata.annotations.platform_repo_basepath}}config/tenant/{{path.basename}}/argoproject-{{path.basename}}-values.yaml'
             parameters:
               - name: "projects[0].sourceRepos[0]"
                 value: '{{metadata.annotations.workload_repo_url}}'
