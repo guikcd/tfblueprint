@@ -14,10 +14,13 @@ spec:
               values:
                 addonChart: kyverno
                 # anything not staging or prod use this version
-                addonChartVersion: 3.0.5
+                addonChartVersion: 3.1.4
                 addonChartRepository: https://kyverno.github.io/kyverno
               selector:
                 matchExpressions:
+                  - key: akuity.io/argo-cd-cluster-name
+                    operator: NotIn
+                    values: [in-cluster]
                   - key: enable_kyverno
                     operator: In
                     values: ['true']
@@ -26,13 +29,13 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: 3.0.5
+                addonChartVersion: 3.1.4
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 3.0.5
+                addonChartVersion: 3.1.4
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -51,27 +54,12 @@ spec:
             valueFiles:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
-              - $values/{{metadata.annotations.addons_repo_basepath}}charts/addons/{{values.addonChart}}/values.yaml
+              - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values.yaml
           # values:
           # fileParameters:
           #  - name:
           #    path:
           # parameters
-          # valuesObject
-        - repoURL: '{{metadata.annotations.addons_repo_url}}'
-          targetRevision: '{{metadata.annotations.addons_repo_revision}}'
-          path: '{{metadata.annotations.addons_repo_basepath}}charts/addons/{{values.addonChart}}/resources'
-          helm:
-            ignoreMissingValueFiles: true
-            valueFiles:
-              - ../../../../environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/resources/values.yaml
-              - ../../../../clusters/{{name}}/addons/{{values.addonChart}}/resources/values.yaml
-          # values:
-          # fileParameters:
-          #  - name:
-          #    path:
-          # parameters
-          # values
           # valuesObject
       destination:
         namespace: '{{values.addonChart}}'

@@ -14,10 +14,13 @@ spec:
               values:
                 addonChart: aws-fsx-csi-driver
                 # anything not staging or prod use this version
-                addonChartVersion: 1.7.0
+                addonChartVersion: 1.9.0
                 addonChartRepository: https://kubernetes-sigs.github.io/aws-fsx-csi-driver
               selector:
                 matchExpressions:
+                  - key: akuity.io/argo-cd-cluster-name
+                    operator: NotIn
+                    values: [in-cluster]
                   - key: enable_aws_fsx_csi_driver
                     operator: In
                     values: ['true']
@@ -26,13 +29,13 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: 1.7.0
+                addonChartVersion: 1.9.0
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 1.7.0
+                addonChartVersion: 1.9.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -49,7 +52,7 @@ spec:
             releaseName: '{{values.addonChart}}'
             ignoreMissingValueFiles: true
             valueFiles:
-              - $values/{{metadata.annotations.addons_repo_basepath}}charts/addons/{{values.addonChart}}/values.yaml
+              - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
             values: |
